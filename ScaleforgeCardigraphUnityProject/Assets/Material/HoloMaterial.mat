@@ -37,11 +37,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _HoloTexture:
-        m_Texture: {fileID: 2800000, guid: 18a4347d7ed1ceb4a88d3ce1cb5c1366, type: 3}
+        m_Texture: {fileID: 2800000, guid: df887154fef1c284681fccad38b55a70, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainMask:
-        m_Texture: {fileID: 2800000, guid: e5f4736de3658e940a82c142791696b4, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -70,7 +70,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DistortionAmount: 30
+    - _DistortionAmount: 100
     - _MovementSpeed: 0.01
     - _OffsetAmount: 1
     - _QueueControl: 0
