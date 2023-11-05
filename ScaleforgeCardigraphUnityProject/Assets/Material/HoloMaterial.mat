@@ -70,9 +70,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DistortionAmount: 100
-    - _MovementSpeed: 0.01
-    - _OffsetAmount: 1
+    - _DistortionAmount: 30
+    - _MovementSpeed: 0.16
+    - _OffsetAmount: 10
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors: []
