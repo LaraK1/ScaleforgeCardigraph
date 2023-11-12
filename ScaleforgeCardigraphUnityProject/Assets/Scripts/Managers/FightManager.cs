@@ -26,7 +26,7 @@ public class FightManager : MonoBehaviour
         foreach (var npc in participants)
         {
             List<FightParticipant> team;
-            if (Teams.TryGetValue(npc.Fighter.Team, out team))
+            if (npc != null && npc.Fighter != null && Teams.TryGetValue(npc.Fighter.Team, out team))
             {
                 team.Add(npc.Fighter);
             }
@@ -36,6 +36,8 @@ public class FightManager : MonoBehaviour
                 Teams[npc.Fighter.Team].Add(npc.Fighter);
             }
         }
+
+        StartRound();
     }
 
     public void StartRound()
@@ -47,25 +49,65 @@ public class FightManager : MonoBehaviour
                 // TODO do some ui stuff
                 Debug.Log($"Team {team.Key} will start its round");
 
-                foreach (var participant in team.Value)
+                foreach (var attacker in team.Value)
                 {
-                    var participantEffects = participant.ParticipantEffects.GetComplete;
+                    Debug.Log($"{attacker.name} turn:");
+                    var attackerEffects = attacker.ParticipantEffects;
 
                     // Needs to skip turn?
-                    var skip = participant.IsDead || participantEffects.Any(x => x.SkipRound);
+                    var skip = attacker.IsDead;
+                    if (skip)
+                    {
+                        Debug.Log($"{attacker.name} is dead and skips.");
+                        continue; 
+                    }
+
+                    // Add turn begin boni from effects
+                    var healthEffectBonus = 0;
+                    var armorEffectBonus = 0;
+                    foreach (var effect in attackerEffects)
+                    {
+                        if (effect.SkipRound)
+                        {
+                            skip = true;
+                            break;
+                        }
+
+                        healthEffectBonus += effect.OneTimeHeal;
+                        armorEffectBonus += effect.OneTimeArmor;
+                    }
 
                     if (skip)
-                        return;
+                    {
+                        Debug.Log($"{attacker.name} needs to skip.");
+                        continue;
+                    }
+
+                    Debug.Log($"{attacker.name} gets bonus health of {healthEffectBonus} and bonus armor of {armorEffectBonus}");
+                    attacker.AddHealth(healthEffectBonus);
+                    attacker.AddArmor(armorEffectBonus);
 
                     // Pick a card
-                    var card = participant.PickFightCard;
-
+                    var card = attacker.PickFightCard;
+                    if(card == null)
+                    {
+                        Debug.Log($"{attacker.name} has no cards and will skip");
+                        continue;
+                    }
                     // Pick a target
                     var possibleTargets = card.IsAttack ? GetNotTeamNpcs(team.Key) : GetTeamNpcs(team.Key);
-                    var target = participant.PickNpcTargetForFight(possibleTargets, card);
-                    participant.UseFightCard(card);
-                    Debug.Log($"{participant.name} uses card {card.name} on {target.name}");
-                    target.TargetOfCard(card, participantEffects);
+
+                    // TODO Can there be no targets?
+                    if (possibleTargets == null || possibleTargets.Count == 0)
+                    {
+                        Debug.Log($"{attacker.name} has no targets and will skip");
+                        continue;
+                    }
+
+                    var target = attacker.PickNpcTargetForFight(possibleTargets, card);
+                    Debug.Log($"{attacker.name} uses card {card.name} on {target.name}");
+                    attacker.UseFightCard(card);
+                    target.TargetOfCard(card, attackerEffects);
                 }
             }
 

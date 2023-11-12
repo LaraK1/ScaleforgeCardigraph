@@ -14,7 +14,6 @@ public abstract class BaseCard : ScriptableObject
     public static uint CardId // Is the Id of the type of card
     { get; protected set; }
 
-    [field: SerializeField]
     public CardType CardType
     { get; protected set; }
 
@@ -56,8 +55,6 @@ public abstract class BaseCard : ScriptableObject
     [field: SerializeField]
     public bool StaysInDeck
     { get; protected set; } = true;
-
-    public abstract void UseCard();
 
     public void Awake()
     {

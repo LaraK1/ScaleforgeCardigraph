@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickNpcNpc : MonoBehaviour, IPickNpc
+[System.Serializable]
+public class PickNpcNpc : PickNpcBase
 {
-    public Npc PickNpc(List<Npc> npcs, BaseCard card)
+    public override Npc PickNpc(List<Npc> npcs, BaseCard card)
     {
+        if (npcs == null || npcs.Count == 0) return null;
+
         return npcs[Random.Range(0, npcs.Count-1)];
     }
 
-    public FightParticipant PickNpc(List<FightParticipant> npcs, FightCard card)
+    public override FightParticipant PickNpc(List<FightParticipant> npcs, FightCard card)
     {
+        if (npcs == null || npcs.Count == 0) return null;
+
         return npcs[Random.Range(0, npcs.Count - 1)];
     }
 }

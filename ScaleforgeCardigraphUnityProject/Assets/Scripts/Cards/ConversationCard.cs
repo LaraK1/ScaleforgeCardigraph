@@ -6,8 +6,5 @@ using UnityEngine;
 public class ConversationCard : BaseCard
 {
     // TODO
-    public override void UseCard()
-    {
-        throw new System.NotImplementedException();
-    }
+    
 }

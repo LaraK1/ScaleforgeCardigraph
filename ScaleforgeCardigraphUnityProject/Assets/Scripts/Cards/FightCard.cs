@@ -33,20 +33,15 @@ public class FightCard : BaseCard
     public int Crush => ConvertToCorruptedValue(crush);
 
     [field: SerializeField]
-    public CardEffect[] GiveCardEffects
+    public Effect[] GiveCardEffects
     { get; private set; }
 
     [field: SerializeField]
-    public CardEffect[] RemoveCardEffects
+    public Effect[] RemoveCardEffects
     { get; private set; }
 
     public FightCard()
     {
         CardType = CardType.Fight;
-    }
-
-    public override void UseCard()
-    {
-        throw new System.NotImplementedException();
     }
 }

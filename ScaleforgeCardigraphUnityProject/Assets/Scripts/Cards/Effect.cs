@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewEffect", menuName = "Effect/CardEffect")]
-public class CardEffect : ScriptableObject
+[CreateAssetMenu(fileName = "NewEffect", menuName = "Effect/Create new Effect")]
+public class Effect : ScriptableObject
 {
     private static uint EffectCount = 0;
     [field: SerializeField]
@@ -17,13 +17,15 @@ public class CardEffect : ScriptableObject
     [field: SerializeField]
     public Sprite Icon
     {get; private set;}
-
     /// <summary>
     /// How many rounds will this effect occur.
     /// </summary>
     [field: SerializeField]
     public int RoundDuration
     {get; private set;}
+
+
+    #region Effects on cards
 
     [field: SerializeField]
     public float BoostHealing
@@ -42,8 +44,27 @@ public class CardEffect : ScriptableObject
     { get; private set; } = 1;
 
     [field: SerializeField]
+    #endregion
+
+    #region Effects on start of turn
     public bool SkipRound
     { get; private set; } = false;
+
+    /// <summary>
+    /// This amount of health will be added on start of turn
+    /// </summary>
+    [field: SerializeField]
+    public int OneTimeHeal
+    { get; private set; } = 0;
+
+    /// <summary>
+    /// This amount of armor will be added on start of turn
+    /// </summary>
+    [field: SerializeField]
+    public int OneTimeArmor
+    { get; private set; } = 0;
+
+    #endregion
 
     /// <summary>
     /// Effect was used in the current round.

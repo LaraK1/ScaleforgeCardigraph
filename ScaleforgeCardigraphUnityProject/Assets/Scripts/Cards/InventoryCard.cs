@@ -7,8 +7,4 @@ public class InventoryCard : BaseCard
 {
 
     // TODO
-    public override void UseCard()
-    {
-        throw new System.NotImplementedException();
-    }
 }

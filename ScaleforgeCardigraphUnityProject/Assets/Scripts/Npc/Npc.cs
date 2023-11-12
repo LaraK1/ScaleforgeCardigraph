@@ -6,6 +6,14 @@ using UnityEngine;
 public class Npc : MonoBehaviour
 {
     [field: SerializeField]
+    public string Name
+    { get; private set; }
+
+    [field: SerializeField]
+    public Sprite Picture
+    { get; private set; }
+
+    [field: SerializeField]
     public FightParticipant Fighter
     {
         get; private set;
