@@ -8,6 +8,9 @@ public class FightManager : MonoBehaviour
     [SerializeField]
     private List<Npc> participants;
 
+    [SerializeField]
+    private CardManagerUI cardManagerUi;
+
     private Dictionary<int, List<FightParticipant>> Teams;
     private int round = 0;
     private int maxRounds = 10;
@@ -42,6 +45,13 @@ public class FightManager : MonoBehaviour
 
     public void StartRound()
     {
+        // Show player cards
+        var playerTeam = Teams[0];
+        if (playerTeam != null && playerTeam.Count > 0) // 0 should always be team of player
+        {
+            cardManagerUi.ShowCardFightDeck(playerTeam[0].ParticipantDeck.GetComplete);
+        }
+
         // Main fight loop
         // Will stop after only one team remains or the max Rounds where hit
         while (maxRounds > round)

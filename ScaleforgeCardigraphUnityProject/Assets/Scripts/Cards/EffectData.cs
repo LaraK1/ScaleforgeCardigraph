@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text;
 
 [CreateAssetMenu(fileName = "NewEffect", menuName = "Effect/Create new Effect Data")]
 public class EffectData : ScriptableObject
@@ -61,5 +62,72 @@ public class EffectData : ScriptableObject
 
     #endregion
 
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
 
+        sb.Append($"Will add effect <b>{Name}</b>. ");
+        if(BoostHealing > 1)
+        {
+            sb.Append("Will increase healing. ");
+        }
+        else if (BoostHealing < 1)
+        {
+            sb.Append("Will decrease healing. ");
+        }
+
+        if (BoostArmor > 1)
+        {
+            sb.Append("Actions for adding armor are increased. ");
+        }
+        else if (BoostArmor < 1)
+        {
+            sb.Append("Actions for adding armor are decreased. ");
+        }
+
+        if (BoostCrush > 1)
+        {
+            sb.Append("Actions for removing enemy armor are increased. ");
+        }
+        else if (BoostCrush < 1)
+        {
+            sb.Append("Actions for removing enemy armor are decreased. ");
+        }
+
+        if (BoostAttack > 1)
+        {
+            sb.Append("Attack strength is increased. ");
+        }
+        else if (BoostAttack < 1)
+        {
+            sb.Append("Attack strength is decreased. ");
+        }
+
+        if(SkipRound)
+        {
+            sb.Append("Target needs to skip round. ");
+        }
+
+        if(OneTimeArmor > 0)
+        {
+            sb.Append($"Armor will be increased by {OneTimeArmor} every round. ");
+        }
+        else if (OneTimeArmor < 0)
+        {
+            sb.Append($"Armor will be decreased by {Mathf.Abs(OneTimeArmor)} every round. ");
+        }
+
+        if (OneTimeHeal > 0)
+        {
+            sb.Append($"Health will be increased by {OneTimeHeal} every round. ");
+        }
+        else if (OneTimeHeal < 0)
+        {
+            sb.Append($"Health will be decreased by {Mathf.Abs(OneTimeHeal)} every round. ");
+        }
+
+        sb.Append($"({RoundDuration} Rounds.)");
+
+        return sb.ToString();
+    }
 }

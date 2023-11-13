@@ -10,16 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac95262a787dddb49b42c383be64d8dd, type: 3}
-  m_Name: Heal
+  m_Name: Poison
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Heal
-  <Picture>k__BackingField: {fileID: 21300000, guid: a0759bf0d46dde243a6f55f75a78cecf, type: 3}
-  <BaseValue>k__BackingField: 0
+  <Name>k__BackingField: Gives Effect Poison
+  <Picture>k__BackingField: {fileID: 21300000, guid: 0bc480fae65e3974dbba663e3e56482a, type: 3}
+  <BaseValue>k__BackingField: 30
   <StaysInDeck>k__BackingField: 1
-  <IsAttack>k__BackingField: 0
-  <Healing>k__BackingField: 10
-  <Attack>k__BackingField: 0
-  <Armor>k__BackingField: 0
-  <Crush>k__BackingField: 0
-  <GiveCardEffects>k__BackingField: []
+  <IsAttack>k__BackingField: 1
+  <GiveCardEffects>k__BackingField:
+  - {fileID: 11400000, guid: a1ffb43191d711a47855e6d379cca4e6, type: 2}
   <RemoveCardEffects>k__BackingField: []

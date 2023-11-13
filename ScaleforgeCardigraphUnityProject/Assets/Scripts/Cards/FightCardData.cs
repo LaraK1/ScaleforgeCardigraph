@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text;
 
 [CreateAssetMenu(fileName = "NewFightCard", menuName = "Cards/FightCard")]
 public class FightCardData : BaseCardData
@@ -12,19 +13,19 @@ public class FightCardData : BaseCardData
     public bool IsAttack
     { get; private set; }
 
-    [SerializeField]
+    [field: SerializeField]
     public int Healing { get; private set; }
 
-    [SerializeField]
+    [field: SerializeField]
     public int Attack { get; private set; }
 
-    [SerializeField]
+    [field: SerializeField]
     public int Armor { get; private set; }
 
     /// <summary>
     /// Amount of armor that gets removed on enemy.
     /// </summary>
-    [SerializeField]
+    [field: SerializeField]
     public int Crush { get; private set; }
 
     [field: SerializeField]
@@ -39,4 +40,21 @@ public class FightCardData : BaseCardData
     {
         CardType = CardType.Fight;
     }
+
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        foreach (var effect in GiveCardEffects)
+        {
+            sb.Append(effect.ToString());
+        }
+        sb.AppendLine();
+        foreach (var effect in RemoveCardEffects)
+        {
+            sb.Append($"Removes effect <b>{effect.name}</b>. ");
+        }
+
+        return sb.ToString();
+    }
+
 }

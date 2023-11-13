@@ -35,7 +35,7 @@ public class FightParticipant : MonoBehaviour
     [field: SerializeField]
     public FightCardCollection InitialDeck { get; private set; }
     private Deck<FightCard> participantDeck = null;
-    private Deck<FightCard> ParticipantDeck => participantDeck ?? (new Deck<FightCard>(InitFightCards(InitialDeck)));
+    public Deck<FightCard> ParticipantDeck => participantDeck ?? (new Deck<FightCard>(InitFightCards(InitialDeck)));
 
     [field: SerializeField]
     public List<EffectData> ParticipantInitEffects { get; private set; }

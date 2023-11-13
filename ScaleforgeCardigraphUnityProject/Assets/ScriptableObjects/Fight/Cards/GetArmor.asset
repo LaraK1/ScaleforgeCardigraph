@@ -12,16 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac95262a787dddb49b42c383be64d8dd, type: 3}
   m_Name: GetArmor
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: 4
   <Name>k__BackingField: Give Armor
-  <Picture>k__BackingField: {fileID: 0}
-  corrupted: 0
-  baseValue: 0
+  <Picture>k__BackingField: {fileID: 21300000, guid: 23bb796345ef7b14c90d7c4c92513a22, type: 3}
+  <BaseValue>k__BackingField: 0
   <StaysInDeck>k__BackingField: 1
   <IsAttack>k__BackingField: 0
-  healing: 0
-  attack: 0
-  armor: 10
-  crush: 0
+  <Healing>k__BackingField: 0
+  <Attack>k__BackingField: 0
+  <Armor>k__BackingField: 10
+  <Crush>k__BackingField: 0
   <GiveCardEffects>k__BackingField: []
   <RemoveCardEffects>k__BackingField: []

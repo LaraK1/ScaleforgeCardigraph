@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseCardData : ScriptableObject
+public class BaseCardData : ScriptableObject
 {
     private static uint CardTypeCount = 0;
 
