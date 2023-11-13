@@ -304,9 +304,8 @@ MonoBehaviour:
   Team: 0
   health: 100
   armor: 10
-  <ParticipantDeck>k__BackingField: {fileID: 11400000, guid: 9882d3070c769d247a111572d846dc76, type: 2}
-  <ParticipantEffects>k__BackingField:
-  - {fileID: 11400000, guid: 1697b57cc013ab84abbddab982d4d5ec, type: 2}
+  <InitialDeck>k__BackingField: {fileID: 11400000, guid: c7e0f087d2d4c6f46aa5f7eda53c677c, type: 2}
+  <ParticipantInitEffects>k__BackingField: []
   cardPicker: {fileID: 1255748171}
   npcPicker: {fileID: 1255748170}
 --- !u!4 &153183964
@@ -659,9 +658,8 @@ MonoBehaviour:
   Team: 1
   health: 100
   armor: 10
-  <ParticipantDeck>k__BackingField: {fileID: 11400000, guid: 9882d3070c769d247a111572d846dc76, type: 2}
-  <ParticipantEffects>k__BackingField:
-  - {fileID: 11400000, guid: d72fb336851d876439f590148b172c57, type: 2}
+  <InitialDeck>k__BackingField: {fileID: 11400000, guid: c7e0f087d2d4c6f46aa5f7eda53c677c, type: 2}
+  <ParticipantInitEffects>k__BackingField: []
   cardPicker: {fileID: 1255748171}
   npcPicker: {fileID: 1255748170}
 --- !u!4 &861703286
@@ -919,9 +917,9 @@ MonoBehaviour:
   Team: 0
   health: 100
   armor: 0
-  <ParticipantDeck>k__BackingField: {fileID: 11400000, guid: 9882d3070c769d247a111572d846dc76, type: 2}
-  <ParticipantEffects>k__BackingField:
-  - {fileID: 11400000, guid: 888f41c64bfc91e4496c9b43486b72ef, type: 2}
+  <InitialDeck>k__BackingField: {fileID: 11400000, guid: c7e0f087d2d4c6f46aa5f7eda53c677c, type: 2}
+  <ParticipantInitEffects>k__BackingField:
+  - {fileID: 11400000, guid: e9989e1b710d6844c888ab1e151d5c48, type: 2}
   cardPicker: {fileID: 1255748171}
   npcPicker: {fileID: 1255748170}
 --- !u!114 &1766841422

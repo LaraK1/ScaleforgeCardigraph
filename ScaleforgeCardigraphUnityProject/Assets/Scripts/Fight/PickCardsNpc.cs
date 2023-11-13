@@ -10,10 +10,6 @@ public class PickCardsNpc : PickCardsBase
         if (deck == null || deck.Count == 0) return null;
         return deck[Random.Range(0, deck.Count)];
     }
-
-    public override ConversationCard PickCard(List<ConversationCard> deck)
-    {
-        if (deck == null || deck.Count == 0) return null;
-        return deck[Random.Range(0, deck.Count - 1)];
-    }
+    
+    // TODO implement other
 }

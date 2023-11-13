@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b2107cff3fa2b344b76931843b9b289, type: 3}
+  m_Script: {fileID: 11500000, guid: 3feccf2e3ab9a214d9912deca4b85a64, type: 3}
   m_Name: Confuse
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: 0
-  <Name>k__BackingField: Confuse
+  <Name>k__BackingField: Skip round for 2
   <Icon>k__BackingField: {fileID: 0}
-  <RoundDuration>k__BackingField: 1
+  <RoundDuration>k__BackingField: 2
   <BoostHealing>k__BackingField: 1
   <BoostAttack>k__BackingField: 1
   <BoostArmor>k__BackingField: 1

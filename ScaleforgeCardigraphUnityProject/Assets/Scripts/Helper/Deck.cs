@@ -2,22 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-public class Deck<T> : ScriptableObject
+public class Deck<T>
 {
     public Dictionary<uint, T> BaseDeck
-    { get; protected set; } = null;
+    { get; protected set; } = new Dictionary<uint, T>();
 
-    public List<T> GetComplete
-    {
-        get
-        {
-            if(BaseDeck == null)
-            {
-                BaseDeck = Init();
-            }
-            return BaseDeck.Values.ToList();
-        }
-    }
+    public List<T> GetComplete => BaseDeck.Values.ToList();
 
     public void Add(T newObj, uint id)
     {
@@ -58,9 +48,30 @@ public class Deck<T> : ScriptableObject
         return default(T);
     }
 
-    protected virtual Dictionary<uint, T> Init()
+    public Deck(List<T> initializeToCollection, string propertyKeyName = "Id")
     {
-        return new Dictionary<uint, T>();
+        if (initializeToCollection == null) return;
+
+        foreach (var item in initializeToCollection)
+        {
+            var keyProperty = item.GetType().GetProperty(propertyKeyName)?.GetValue(item, null);
+            if(keyProperty == null || keyProperty.GetType() != typeof(uint))
+            {
+#if DEBUG
+                Debug.LogWarning($"An item could not be initialized to the deck");
+#endif
+                continue;
+            }
+            uint key = (uint)keyProperty;
+            if(!BaseDeck.ContainsKey(key))
+            {
+                BaseDeck[key] = item;
+                continue;
+            }
+#if DEBUG
+            Debug.LogWarning($"Duplicate for element with id {key}");
+#endif
+        }
     }
 }
 

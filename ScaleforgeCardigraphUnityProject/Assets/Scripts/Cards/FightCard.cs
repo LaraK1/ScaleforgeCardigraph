@@ -2,46 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewFightCard", menuName = "Cards/FightCard")]
 public class FightCard : BaseCard
 {
-    /// <summary>
-    /// If IsAttack this card is used on the opposing team. If not, this card can be used on your own team.
-    /// </summary>
-    [field: SerializeField]
-    public bool IsAttack
+    public FightCardData Data
     { get; private set; }
 
-    [SerializeField]
-    private int healing;
-
-    public int Healing => ConvertToCorruptedValue(healing);
-
-    [SerializeField]
-    private int attack;
-    public int Attack => ConvertToCorruptedValue(attack);
-
-    [SerializeField]
-    private int armor;
-    public int Armor => ConvertToCorruptedValue(armor);
-
-    /// <summary>
-    /// Amount of armor that gets removed on enemy.
-    /// </summary>
-    [SerializeField]
-    private int crush;
-    public int Crush => ConvertToCorruptedValue(crush);
-
-    [field: SerializeField]
-    public Effect[] GiveCardEffects
-    { get; private set; }
-
-    [field: SerializeField]
-    public Effect[] RemoveCardEffects
-    { get; private set; }
-
-    public FightCard()
+    public FightCard(FightCardData data)
     {
-        CardType = CardType.Fight;
+        this.Data = data;
     }
+
+    public int Healing => ConvertToCorruptedValue(Data.Healing);
+    public int Attack => ConvertToCorruptedValue(Data.Attack);
+    public int Armor => ConvertToCorruptedValue(Data.Armor);
+    public int Crush => ConvertToCorruptedValue(Data.Crush);
+
+
+
 }

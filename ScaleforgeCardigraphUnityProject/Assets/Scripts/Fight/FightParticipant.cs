@@ -33,77 +33,112 @@ public class FightParticipant : MonoBehaviour
     }
 
     [field: SerializeField]
-    public FightDeck ParticipantDeck { get; private set; }
+    public FightCardCollection InitialDeck { get; private set; }
+    private Deck<FightCard> participantDeck = null;
+    private Deck<FightCard> ParticipantDeck => participantDeck ?? (new Deck<FightCard>(InitFightCards(InitialDeck)));
 
     [field: SerializeField]
-    public List<Effect> ParticipantEffects { get; private set; }
+    public List<EffectData> ParticipantInitEffects { get; private set; }
+    private List<Effect> participantEffects = null;
+    public List<Effect> ParticipantEffects => participantEffects ?? (participantEffects = InitEffectList());
 
     [SerializeField]
     private PickCardsBase cardPicker;
     [SerializeField] 
     private PickNpcBase npcPicker;
 
-    public FightCard PickFightCard => cardPicker.PickCard(ParticipantDeck.GetComplete);
-    public FightParticipant PickNpcTargetForFight(List<FightParticipant> npcs, FightCard card) => npcPicker.PickNpc(npcs, card);
+    public FightCard PickFightCard => cardPicker.PickCard(ParticipantDeck?.GetComplete);
+    public FightParticipant PickNpcTargetForFight(List<FightParticipant> npcs, FightCardData card) => npcPicker.PickNpc(npcs, card);
+
+
+    public List<FightCard> InitFightCards(FightCardCollection initDeck)
+    {
+        if (InitialDeck.FightCardsToAddToDeck == null)
+        {
+            Health = -1; // TODO no Cards given
+            return null;
+        }
+        var cards = new List<FightCard>();
+        foreach (var cardData in InitialDeck.FightCardsToAddToDeck)
+        {
+            cards.Add(new FightCard(cardData));
+        }
+        return cards;
+    }
+
+    public List<Effect> InitEffectList()
+    {
+        List<Effect> initEffects = new List<Effect>();
+        foreach (var item in ParticipantInitEffects)
+        {
+            initEffects.Add(new Effect(item));
+        }
+        return initEffects;
+    }
 
     public void UseFightCard(FightCard card)
     {
-        if (!card.StaysInDeck)
+        if (!card.Data.StaysInDeck)
         {
             ParticipantDeck.Remove(card.Id);
         }
     }
 
-    public void TargetOfCard(FightCard card, List<Effect> agressorEffects)
+    public void TargetOfCard(FightCard card, List<Effect> attackerEffects)
     {
-        // Give effects of cards to target
-        if (card.GiveCardEffects != null)
-        {
-            foreach (var effect in card.GiveCardEffects)
-            {
-                Debug.Log($"The effect {effect.name} will be added to {name}");
-                ParticipantEffects.Add(effect);
-            }
-        }
-
         // Remove effects of cards to target
-        if (card.RemoveCardEffects != null)
+        if (card.Data.RemoveCardEffects != null)
         {
-            foreach (var effect in card.RemoveCardEffects)
+            foreach (var effect in card.Data.RemoveCardEffects)
             {
                 Debug.Log($"The effect {effect.name} will be removed from {name}");
-                ParticipantEffects.Remove(effect);
+                ParticipantEffects.RemoveAll(x => x.Data == effect);
             }
         }
 
+        // Give effects of cards to target
+        if (card.Data.GiveCardEffects != null)
+        {
+            foreach (var effect in card.Data.GiveCardEffects)
+            {
+                Debug.Log($"The effect {effect.name} will be added to {name}");
+                ParticipantEffects.Add(new Effect(effect));
+            }
+        }
+
+        // Add the targets effects to the card values multiplier
         float effectorAttack = 1;
         float effectorHealing = 1;
         float effectorCrush = 1;
         float effectorArmor = 1;
         foreach (var effect in ParticipantEffects)
         {
-            effectorAttack *= effect.BoostAttack;
-            effectorHealing *= effect.BoostHealing;
-            effectorArmor *= effect.BoostArmor;
-            effectorCrush *= effect.BoostCrush;
+            effectorAttack *= effect.Data.BoostAttack;
+            effectorHealing *= effect.Data.BoostHealing;
+            effectorArmor *= effect.Data.BoostArmor;
+            effectorCrush *= effect.Data.BoostCrush;
         }
 
-        if (agressorEffects != null)
+        // Add the attackers effects to the card values multiplier
+        if (attackerEffects != null)
         {
-            foreach (var effect in agressorEffects)
+            foreach (var effect in attackerEffects)
             {
-                effectorAttack *= effect.BoostAttack;
-                effectorHealing *= effect.BoostHealing;
-                effectorArmor *= effect.BoostArmor;
-                effectorCrush *= effect.BoostCrush;
+                effectorAttack *= effect.Data.BoostAttack;
+                effectorHealing *= effect.Data.BoostHealing;
+                effectorArmor *= effect.Data.BoostArmor;
+                effectorCrush *= effect.Data.BoostCrush;
             }
         }
 
+        // Add card values with effects to target
         AddHealth(card.Healing * effectorHealing);
         AddHealth(-(card.Attack * effectorAttack));
         AddArmor(card.Armor * effectorArmor);
         AddArmor(-(card.Crush * effectorCrush));
 
+
+        // Check if target ist dead
         if(IsDead)
         {
             Died();
@@ -136,16 +171,16 @@ public class FightParticipant : MonoBehaviour
 
     public void UpdateEffects()
     {
-        foreach (var effect in ParticipantEffects)
+        ParticipantEffects.RemoveAll(effect =>
         {
-            effect.NextRound();
-        }
+            return effect.NextRound();
+        });
     }
 
     public void Died()
     {
         // loses all effects when dead
-        ParticipantEffects = new List<Effect>();
+        participantEffects = new List<Effect>();
         Debug.Log("Is dead");
     }
 

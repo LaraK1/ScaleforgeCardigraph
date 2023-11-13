@@ -42,19 +42,23 @@ public class FightManager : MonoBehaviour
 
     public void StartRound()
     {
+        // Main fight loop
+        // Will stop after only one team remains or the max Rounds where hit
         while (maxRounds > round)
         {
+            // For each team:
             foreach (KeyValuePair<int, List<FightParticipant>> team in Teams)
             {
                 // TODO do some ui stuff
                 Debug.Log($"Team {team.Key} will start its round");
 
+                // For each npc in team:
                 foreach (var attacker in team.Value)
                 {
                     Debug.Log($"{attacker.name} turn:");
                     var attackerEffects = attacker.ParticipantEffects;
 
-                    // Needs to skip turn?
+                    // Needs to skip turn because it is dead?
                     var skip = attacker.IsDead;
                     if (skip)
                     {
@@ -62,28 +66,30 @@ public class FightManager : MonoBehaviour
                         continue; 
                     }
 
-                    // Add turn begin boni from effects
+                    // Sum up turn begin boni from effects
                     var healthEffectBonus = 0;
                     var armorEffectBonus = 0;
                     foreach (var effect in attackerEffects)
                     {
-                        if (effect.SkipRound)
+                        if (effect.Data.SkipRound)
                         {
                             skip = true;
                             break;
                         }
 
-                        healthEffectBonus += effect.OneTimeHeal;
-                        armorEffectBonus += effect.OneTimeArmor;
+                        healthEffectBonus += effect.Data.OneTimeHeal;
+                        armorEffectBonus += effect.Data.OneTimeArmor;
                     }
 
+                    // Needs to skip because of a effect?
                     if (skip)
                     {
                         Debug.Log($"{attacker.name} needs to skip.");
                         continue;
                     }
 
-                    Debug.Log($"{attacker.name} gets bonus health of {healthEffectBonus} and bonus armor of {armorEffectBonus}");
+                    // Add effect boni
+                    Debug.Log($"{attacker.name} gets following effect boni:");
                     attacker.AddHealth(healthEffectBonus);
                     attacker.AddArmor(armorEffectBonus);
 
@@ -94,18 +100,22 @@ public class FightManager : MonoBehaviour
                         Debug.Log($"{attacker.name} has no cards and will skip");
                         continue;
                     }
-                    // Pick a target
-                    var possibleTargets = card.IsAttack ? GetNotTeamNpcs(team.Key) : GetTeamNpcs(team.Key);
+
+                    // Find all possible targets
+                    var possibleTargets = card.Data.IsAttack ? GetNotTeamNpcs(team.Key) : GetTeamNpcs(team.Key);
 
                     // TODO Can there be no targets?
                     if (possibleTargets == null || possibleTargets.Count == 0)
                     {
-                        Debug.Log($"{attacker.name} has no targets and will skip");
+#if DEBUG
+                        Debug.LogWarning($"{attacker.name} has no targets and will skip");
+#endif
                         continue;
                     }
 
-                    var target = attacker.PickNpcTargetForFight(possibleTargets, card);
-                    Debug.Log($"{attacker.name} uses card {card.name} on {target.name}");
+                    // Pick a target
+                    var target = attacker.PickNpcTargetForFight(possibleTargets, card.Data);
+                    Debug.Log($"{attacker.name} uses card {card.Data.name} on {target.name}");
                     attacker.UseFightCard(card);
                     target.TargetOfCard(card, attackerEffects);
                 }
@@ -120,6 +130,7 @@ public class FightManager : MonoBehaviour
                 }
             }
 
+            // Check if only one team is left
             if (OneTeamStanding())
             {
                 EndFight();
@@ -127,6 +138,8 @@ public class FightManager : MonoBehaviour
             }
             round += 1;
         }
+        Debug.Log("Fight ended after max rounds was reached");
+        EndFight();
     }
 
     private bool OneTeamStanding()

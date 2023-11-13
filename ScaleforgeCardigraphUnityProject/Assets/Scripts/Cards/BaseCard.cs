@@ -2,27 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseCard : ScriptableObject
+public class BaseCard
 {
     private static uint CardCount = 0;
 
     [field: SerializeField]
     public uint Id  // Is the unique Id of the specific card
-    { get; private set; }
-
-    [field: SerializeField]
-    public static uint CardId // Is the Id of the type of card
-    { get; protected set; }
-
-    public CardType CardType
-    { get; protected set; }
-
-    [field: SerializeField]
-    public string Name
-    { get; protected set; }
-
-    [field: SerializeField]
-    public Sprite Picture
     { get; protected set; }
 
     [SerializeField]
@@ -42,21 +27,8 @@ public abstract class BaseCard : ScriptableObject
             corrupted = Mathf.Max(0, Mathf.Min(1, value)); // Cant be smaller than 0 and not higher than 1
         }
     }
-
-    [SerializeField]
-    protected int baseValue;
-
-    public int Value => Mathf.RoundToInt(baseValue * Corrupted);
     protected int ConvertToCorruptedValue(int val) => Mathf.RoundToInt(val * Corrupted);
-
-    /// <summary>
-    /// Will stay in deck after usage
-    /// </summary>
-    [field: SerializeField]
-    public bool StaysInDeck
-    { get; protected set; } = true;
-
-    public void Awake()
+    public BaseCard()
     {
         CardCount++;
         Id = CardCount;

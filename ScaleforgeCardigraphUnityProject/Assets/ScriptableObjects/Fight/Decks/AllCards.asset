@@ -9,16 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c442199d9470980449aba4d93b33c70f, type: 3}
-  m_Name: FightDeck1
+  m_Script: {fileID: 11500000, guid: 41a702d0c5788d441b8e268b3a8e3344, type: 3}
+  m_Name: AllCards
   m_EditorClassIdentifier: 
-  FightCardsToAddToDeck:
+  <FightCardsToAddToDeck>k__BackingField:
   - {fileID: 11400000, guid: 2022175e2fc345b43af1693c684da805, type: 2}
   - {fileID: 11400000, guid: 7d681370ada3e274ca6c66d3886c67d6, type: 2}
   - {fileID: 11400000, guid: 47b17be137b0a5745826ffbf5b427bb5, type: 2}
-  - {fileID: 11400000, guid: cb984e585b67a3b43b2a00df1c703c24, type: 2}
-  - {fileID: 11400000, guid: fb2ffb39cc1229446aa3fec1ad37beb2, type: 2}
-  - {fileID: 11400000, guid: 90823a3dde962de48a4293decb5b0317, type: 2}
   - {fileID: 11400000, guid: 267f401827b9241438f93dbfbc24d8f9, type: 2}
   - {fileID: 11400000, guid: 15ef1f02bb6b6d346bdeb43387080cc7, type: 2}
   - {fileID: 11400000, guid: e9ccb876bf1c024458b6cd8d988d00f3, type: 2}
